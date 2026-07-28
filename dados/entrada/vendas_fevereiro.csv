@@ -1,0 +1,15 @@
+Data;Pedido;Loja;Produto;Categoria;Quantidade;Preço Unitário
+02/02/2026;P-2001;Centro;Notebook Pro 14;Informática;2;3.499,90
+04/02/2026;P-2002;Online;Monitor 24;Informática;3;899,90
+06/02/2026;P-2003;Norte;Mouse Sem Fio;Acessórios;5;89,90
+08/02/2026;P-2004;Sul;Cadeira Ergonômica;Móveis;2;1.299,90
+11/02/2026;P-2005;Centro;SSD 1TB;Componentes;4;449,90
+13/02/2026;P-2006;Online;Teclado Mecânico;Acessórios;3;249,90
+16/02/2026;P-2007;Norte;Impressora Laser;Escritório;1;1.899,90
+18/02/2026;P-2008;Sul;Headset USB;Acessórios;4;179,90
+20/02/2026;P-2009;Centro;Webcam Full HD;Acessórios;3;299,90
+22/02/2026;P-2010;Online;Memória RAM 16GB;Componentes;6;289,90
+25/02/2026;P-2011;Norte;Mesa para Escritório;Móveis;2;799,90
+27/02/2026;P-2012;Sul;Hub USB-C;Acessórios;4;129,90
+28/02/2026;P-2013;Centro;Mouse Sem Fio;Acessórios;-2;89,90
+28/02/2026;P-2014;Online;SSD 1TB;Componentes;1;

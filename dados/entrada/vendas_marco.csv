@@ -1,0 +1,15 @@
+Data;Pedido;Loja;Produto;Categoria;Quantidade;Preço Unitário
+01/03/2026;P-3001;Centro;Monitor 24;Informática;4;899,90
+03/03/2026;P-3002;Online;Notebook Pro 14;Informática;2;3.499,90
+05/03/2026;P-3003;Norte;Teclado Mecânico;Acessórios;5;249,90
+07/03/2026;P-3004;Sul;SSD 1TB;Componentes;4;449,90
+10/03/2026;P-3005;Centro;Cadeira Ergonômica;Móveis;2;1.299,90
+12/03/2026;P-3006;Online;Impressora Laser;Escritório;2;1.899,90
+15/03/2026;P-3007;Norte;Headset USB;Acessórios;6;179,90
+17/03/2026;P-3008;Sul;Memória RAM 16GB;Componentes;5;289,90
+20/03/2026;P-3009;Centro;Mesa para Escritório;Móveis;3;799,90
+22/03/2026;P-3010;Online;Webcam Full HD;Acessórios;4;299,90
+25/03/2026;P-3011;Norte;Hub USB-C;Acessórios;8;129,90
+28/03/2026;P-3012;Sul;Mouse Sem Fio;Acessórios;7;89,90
+31/02/2026;P-3013;Centro;Monitor 24;Informática;1;899,90
+30/03/2026;;Online;Mouse Sem Fio;Acessórios;2;89,90
