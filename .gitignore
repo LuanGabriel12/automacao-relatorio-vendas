@@ -6,6 +6,7 @@ venv/
 .pytest_cache/
 .vscode/
 .idea/
-logs/*.log
+resultado/*.csv
+resultado/*.png
 resultado/*.xlsx
-~$*.xlsx
+logs/*.log

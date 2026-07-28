@@ -1,105 +1,90 @@
-# Automação de relatório de vendas
+# Análise de vendas com Python
 
-Criei este projeto para praticar Python e análise de dados em uma situação
-próxima de uma rotina de empresa: receber arquivos de vendas, organizar os
-dados e gerar um relatório sem fazer o processo manualmente todo mês.
+Montei este projeto para praticar análise de dados com uma situação parecida
+com uma rotina de empresa. O programa reúne as vendas de três meses, encontra
+linhas com problemas, calcula os principais resultados e gera arquivos que
+podem ser usados em uma análise.
 
-O programa lê arquivos CSV ou Excel, trata registros incorretos, calcula os
-principais indicadores e entrega um arquivo `.xlsx` com tabelas e gráficos.
+Mantive todo o código em um único arquivo para conseguir acompanhar a ordem
+das etapas e explicar o que cada parte faz. Os dados são fictícios.
 
-Os dados usados no projeto são fictícios.
-Os arquivos de exemplo também possuem cinco linhas inválidas e uma duplicada
-de propósito. Assim, é possível testar o tratamento de erros e conferir o
-resultado na aba `Inconsistencias`.
+## O que o projeto faz
 
-## Funcionalidades
-
-- Consolidação de vários arquivos em uma única base;
-- Conversão de datas e valores no formato brasileiro;
-- Remoção de registros duplicados;
-- Separação de linhas com dados ausentes ou inválidos;
-- Cálculo de faturamento e ticket médio;
-- Análises por loja, produto, categoria e mês;
-- Geração de relatório Excel formatado;
-- Registro da execução em log;
-- Testes automatizados das principais regras.
+- Lê três arquivos CSV com Pandas;
+- Junta os meses em uma única tabela;
+- Identifica dados ausentes, datas inválidas e vendas duplicadas;
+- Calcula faturamento, ticket médio e quantidade de itens;
+- Cria análises por loja, produto e mês;
+- Salva cinco tabelas em CSV;
+- Gera um gráfico em PNG com Matplotlib.
 
 ## Tecnologias utilizadas
 
 - Python;
 - Pandas;
-- OpenPyXL;
-- `unittest`.
+- NumPy;
+- Matplotlib;
+- `datetime`, que já faz parte do Python.
 
-## Estrutura do projeto
+## Resultado com os dados de exemplo
 
-```text
-.
-├── dados/
-│   └── entrada/                 # arquivos usados como entrada
-├── docs/
-│   └── como_funciona.md         # explicação das etapas
-├── logs/                        # logs gerados durante a execução
-├── resultado/                   # relatório Excel gerado
-├── src/
-│   └── relatorio_vendas.py      # tratamento, análises e exportação
-├── tests/
-│   └── test_relatorio_vendas.py
-├── executar_projeto.cmd         # atalho para executar no Windows
-├── main.py
-└── requirements.txt
-```
+| Indicador | Resultado |
+|---|---:|
+| Vendas válidas | 36 |
+| Inconsistências | 6 |
+| Pedidos | 36 |
+| Itens vendidos | 120 |
+| Faturamento | R$ 65.068,00 |
+| Ticket médio | R$ 1.807,44 |
+
+![Gráficos com o resumo das vendas](docs/resumo_vendas.png)
 
 ## Como executar
 
-Requisito: Python 3.10 ou superior.
+É necessário ter o Python 3.10 ou mais recente instalado.
 
-### 1. Crie um ambiente virtual
-
-No Windows:
+No Windows, abra o PowerShell dentro da pasta do projeto e execute:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-No Linux ou macOS:
-
-```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-```
-
-### 2. Gere o relatório
-
-No Windows:
-
-```powershell
 .\.venv\Scripts\python.exe main.py
 ```
 
-No Linux ou macOS:
-
-```bash
-.venv/bin/python main.py
-```
-
-O arquivo será salvo em `resultado/relatorio_vendas.xlsx`.
-
-No Windows, depois de preparar o ambiente, também é possível usar o arquivo
+Depois da primeira configuração, também é possível executar o arquivo
 `executar_projeto.cmd`.
 
-Para escolher outros caminhos no Windows:
+Os resultados serão criados na pasta `resultado`.
 
-```powershell
-.\.venv\Scripts\python.exe main.py `
-    --entrada caminho/dos/arquivos `
-    --saida caminho/relatorio.xlsx
+## Arquivos gerados
+
+| Arquivo | Conteúdo |
+|---|---|
+| `vendas_tratadas.csv` | Vendas que passaram pela validação |
+| `inconsistencias.csv` | Linhas que precisam ser corrigidas |
+| `analise_lojas.csv` | Quantidade e faturamento por loja |
+| `analise_produtos.csv` | Quantidade e faturamento por produto |
+| `analise_mensal.csv` | Quantidade e faturamento por mês |
+| `resumo_vendas.png` | Gráficos de faturamento |
+
+## Estrutura
+
+```text
+.
+├── dados/
+│   └── entrada/              # arquivos CSV usados na análise
+├── docs/
+│   ├── como_funciona.md      # explicação da lógica
+│   └── resumo_vendas.png     # exemplo do gráfico gerado
+├── resultado/                # arquivos criados pelo programa
+├── executar_projeto.cmd
+├── main.py                   # código do projeto
+└── requirements.txt
 ```
 
-## Formato dos arquivos de entrada
+## Formato dos dados
 
-Os arquivos devem ser `.csv` ou `.xlsx` e conter estas colunas:
+Os arquivos de entrada usam `;` como separador e precisam ter estas colunas:
 
 | Coluna | Exemplo |
 |---|---|
@@ -111,70 +96,29 @@ Os arquivos devem ser `.csv` ou `.xlsx` e conter estas colunas:
 | Quantidade | 7 |
 | Preço Unitário | 89,90 |
 
-Os arquivos CSV do exemplo usam `;` como separador.
-
-## Resultado com os dados de exemplo
-
-| Indicador | Resultado |
-|---|---:|
-| Vendas válidas | 36 |
-| Registros descartados | 6 |
-| Pedidos | 36 |
-| Itens vendidos | 120 |
-| Faturamento | R$ 65.068,00 |
-| Ticket médio | R$ 1.807,44 |
-
-O relatório possui as abas `Resumo`, `Vendas_Limpas`, `Por_Loja`,
-`Por_Produto`, `Por_Categoria`, `Por_Mes` e `Inconsistencias`.
-
-## Testes
-
-Para executar os testes:
-
-No Windows:
-
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-```
-
-No Linux ou macOS:
-
-```bash
-.venv/bin/python -m unittest discover -s tests -v
-```
-
-Os testes verificam a conversão de valores, a limpeza dos dados, os
-agrupamentos, a validação das colunas e a criação do arquivo Excel.
+Os arquivos de exemplo possuem cinco linhas incorretas e uma venda repetida de
+propósito. Dessa forma, é possível conferir se a limpeza está funcionando.
 
 ## O que pratiquei
 
-- Leitura e concatenação de arquivos com Pandas;
-- Limpeza de dados e tratamento de valores ausentes;
-- Filtros, agrupamentos e funções de agregação;
-- Organização do código em funções;
-- Geração e formatação de planilhas;
-- Criação de testes automatizados.
+- `read_csv()` e `concat()` para leitura e união dos dados;
+- Tratamento de datas e valores ausentes;
+- Filtros com `loc`;
+- Cálculos entre colunas;
+- `groupby()` para resumir os resultados;
+- Criação de gráficos com Matplotlib;
+- Exportação de DataFrames para CSV.
 
-Uma explicação mais detalhada está em
+A ordem completa das etapas está em
 [docs/como_funciona.md](docs/como_funciona.md).
 
 ## Limitações atuais
 
-- Os arquivos CSV precisam usar `;` como separador;
-- Os nomes das colunas precisam seguir o formato documentado;
-- Os dados são processados em memória;
-- O relatório é gerado localmente e não possui agendamento automático.
+- Os três nomes de arquivo estão escritos no começo do `main.py`;
+- Os arquivos precisam ser CSV e usar `;` como separador;
+- Os nomes das colunas precisam seguir o modelo deste projeto;
+- O programa deve ser executado a partir da pasta do projeto.
 
-Mantive essas limitações para não aumentar demais o escopo da primeira versão.
-
-## Próximas melhorias
-
-- Salvar a base tratada em SQLite;
-- Permitir nomes alternativos para as colunas;
-- Adicionar uma meta mensal e calcular a diferença para o resultado.
-
-## Arquivos gerados
-
-O relatório e o log não ficam versionados no Git. Eles são recriados sempre
-que o programa é executado. Os arquivos `.gitkeep` servem apenas para manter as
-pastas `resultado` e `logs` visíveis no repositório.
+Uma próxima versão pode procurar novos arquivos automaticamente e separar o
+código em funções. Preferi deixar essas melhorias para depois de dominar esses
+conceitos.
