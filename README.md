@@ -8,6 +8,9 @@ O programa lê arquivos CSV ou Excel, trata registros incorretos, calcula os
 principais indicadores e entrega um arquivo `.xlsx` com tabelas e gráficos.
 
 Os dados usados no projeto são fictícios.
+Os arquivos de exemplo também possuem cinco linhas inválidas e uma duplicada
+de propósito. Assim, é possível testar o tratamento de erros e conferir o
+resultado na aba `Inconsistencias`.
 
 ## Funcionalidades
 
@@ -26,7 +29,7 @@ Os dados usados no projeto são fictícios.
 - Python;
 - Pandas;
 - OpenPyXL;
-- Unittest.
+- `unittest`.
 
 ## Estrutura do projeto
 
@@ -42,6 +45,7 @@ Os dados usados no projeto são fictícios.
 │   └── relatorio_vendas.py      # tratamento, análises e exportação
 ├── tests/
 │   └── test_relatorio_vendas.py
+├── executar_projeto.cmd         # atalho para executar no Windows
 ├── main.py
 └── requirements.txt
 ```
@@ -82,10 +86,15 @@ No Linux ou macOS:
 
 O arquivo será salvo em `resultado/relatorio_vendas.xlsx`.
 
-Também é possível escolher outros caminhos:
+No Windows, depois de preparar o ambiente, também é possível usar o arquivo
+`executar_projeto.cmd`.
 
-```bash
-python main.py --entrada caminho/dos/arquivos --saida caminho/relatorio.xlsx
+Para escolher outros caminhos no Windows:
+
+```powershell
+.\.venv\Scripts\python.exe main.py `
+    --entrada caminho/dos/arquivos `
+    --saida caminho/relatorio.xlsx
 ```
 
 ## Formato dos arquivos de entrada
@@ -122,12 +131,20 @@ O relatório possui as abas `Resumo`, `Vendas_Limpas`, `Por_Loja`,
 
 Para executar os testes:
 
+No Windows:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+No Linux ou macOS:
+
 ```bash
-python -m unittest discover -s tests -v
+.venv/bin/python -m unittest discover -s tests -v
 ```
 
 Os testes verificam a conversão de valores, a limpeza dos dados, os
-agrupamentos e a criação do arquivo Excel.
+agrupamentos, a validação das colunas e a criação do arquivo Excel.
 
 ## O que pratiquei
 
@@ -141,9 +158,23 @@ agrupamentos e a criação do arquivo Excel.
 Uma explicação mais detalhada está em
 [docs/como_funciona.md](docs/como_funciona.md).
 
-## Melhorias que pretendo fazer
+## Limitações atuais
 
-- Salvar os dados tratados em um banco SQL;
-- Criar uma interface simples para selecionar os arquivos;
-- Adicionar comparação entre resultado e meta;
-- Agendar a execução da automação.
+- Os arquivos CSV precisam usar `;` como separador;
+- Os nomes das colunas precisam seguir o formato documentado;
+- Os dados são processados em memória;
+- O relatório é gerado localmente e não possui agendamento automático.
+
+Mantive essas limitações para não aumentar demais o escopo da primeira versão.
+
+## Próximas melhorias
+
+- Salvar a base tratada em SQLite;
+- Permitir nomes alternativos para as colunas;
+- Adicionar uma meta mensal e calcular a diferença para o resultado.
+
+## Arquivos gerados
+
+O relatório e o log não ficam versionados no Git. Eles são recriados sempre
+que o programa é executado. Os arquivos `.gitkeep` servem apenas para manter as
+pastas `resultado` e `logs` visíveis no repositório.

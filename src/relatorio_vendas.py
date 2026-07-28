@@ -669,6 +669,13 @@ def executar_pipeline(pasta_entrada, caminho_saida, caminho_log):
         if vendas.empty:
             raise ValueError("Nenhuma venda válida foi encontrada.")
 
+        logging.info(
+            "Registros válidos: %s | Inconsistências: %s | Duplicados: %s",
+            len(vendas),
+            len(inconsistencias),
+            duplicados,
+        )
+
         analises = criar_analises(vendas)
         kpis = calcular_kpis(vendas, inconsistencias)
         gerar_relatorio_excel(
@@ -685,5 +692,8 @@ def executar_pipeline(pasta_entrada, caminho_saida, caminho_log):
             "duplicados_removidos": duplicados,
             "arquivo_saida": str(caminho_saida),
         }
+    except Exception:
+        logging.exception("Falha durante a execução")
+        raise
     finally:
         logging.shutdown()

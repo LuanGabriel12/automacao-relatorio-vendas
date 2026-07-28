@@ -7,6 +7,7 @@ from openpyxl import load_workbook
 
 from src.relatorio_vendas import (
     calcular_kpis,
+    carregar_vendas,
     converter_numero_brasileiro,
     criar_analises,
     executar_pipeline,
@@ -62,6 +63,33 @@ class TestRelatorioVendas(unittest.TestCase):
         self.assertEqual(len(inconsistencias), 2)
         self.assertEqual(duplicados, 1)
         self.assertEqual(vendas.iloc[0]["faturamento"], 6000.00)
+        self.assertIn(
+            "Quantidade inválida",
+            inconsistencias["motivo_descarte"].tolist(),
+        )
+        self.assertIn(
+            "Registro duplicado",
+            inconsistencias["motivo_descarte"].tolist(),
+        )
+
+    def test_arquivo_sem_coluna_obrigatoria(self):
+        with TemporaryDirectory() as pasta_temporaria:
+            entrada = Path(pasta_temporaria)
+            pd.DataFrame(
+                [
+                    {
+                        "Data": "01/01/2026",
+                        "Pedido": "P-1",
+                        "Loja": "Centro",
+                        "Produto": "Notebook",
+                        "Categoria": "Informática",
+                        "Quantidade": "1",
+                    }
+                ]
+            ).to_csv(entrada / "vendas.csv", sep=";", index=False)
+
+            with self.assertRaisesRegex(ValueError, "preco_unitario"):
+                carregar_vendas(entrada)
 
     def test_ordenacao_da_analise_por_loja(self):
         vendas = pd.DataFrame(

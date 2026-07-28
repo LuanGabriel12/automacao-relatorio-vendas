@@ -35,7 +35,7 @@ def main():
             argumentos.saida,
             caminho_log,
         )
-    except (FileNotFoundError, ValueError) as erro:
+    except (FileNotFoundError, PermissionError, ValueError) as erro:
         print(f"Erro: {erro}")
         raise SystemExit(1) from erro
 
