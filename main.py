@@ -115,6 +115,17 @@ itens_vendidos = vendas_validas["Quantidade"].sum()
 quantidade_pedidos = vendas_validas["Pedido"].nunique()
 ticket_medio = faturamento_total / quantidade_pedidos
 
+# Formata os valores em reais para mostrar no terminal
+faturamento_formatado = f"{faturamento_total:,.2f}"
+faturamento_formatado = (
+    faturamento_formatado.replace(",", "_").replace(".", ",").replace("_", ".")
+)
+
+ticket_medio_formatado = f"{ticket_medio:,.2f}"
+ticket_medio_formatado = (
+    ticket_medio_formatado.replace(",", "_").replace(".", ",").replace("_", ".")
+)
+
 # Análise por loja
 analise_lojas = (
     vendas_validas.groupby("Loja")[["Quantidade", "Faturamento"]]
@@ -216,6 +227,6 @@ print(f"Vendas válidas: {len(vendas_validas)}")
 print(f"Inconsistências: {len(inconsistencias)}")
 print(f"Pedidos: {quantidade_pedidos}")
 print(f"Itens vendidos: {itens_vendidos}")
-print(f"Faturamento total: R$ {faturamento_total:.2f}")
-print(f"Ticket médio: R$ {ticket_medio:.2f}")
+print(f"Faturamento total: R$ {faturamento_formatado}")
+print(f"Ticket médio: R$ {ticket_medio_formatado}")
 print("Arquivos salvos na pasta resultado.")

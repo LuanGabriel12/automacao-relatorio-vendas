@@ -1,18 +1,18 @@
 # Análise de vendas com Python
 
-Montei este projeto para praticar análise de dados com uma situação parecida
-com uma rotina de empresa. O programa reúne as vendas de três meses, encontra
-linhas com problemas, calcula os principais resultados e gera arquivos que
-podem ser usados em uma análise.
+Criei este projeto para praticar análise de dados em uma situação próxima de
+uma rotina de vendas. O programa reúne dados de três meses, separa linhas com
+problemas, calcula indicadores e gera tabelas de resumo e gráficos.
 
-Mantive todo o código em um único arquivo para conseguir acompanhar a ordem
-das etapas e explicar o que cada parte faz. Os dados são fictícios.
+O código está em um único arquivo e segue uma ordem linear, o que facilita o
+estudo de cada etapa. Todos os dados usados no projeto são fictícios.
 
 ## O que o projeto faz
 
 - Lê três arquivos CSV com Pandas;
 - Junta os meses em uma única tabela;
-- Identifica dados ausentes, datas inválidas e vendas duplicadas;
+- Identifica campos ausentes, datas inválidas, valores menores ou iguais a
+  zero e registros duplicados;
 - Calcula faturamento, ticket médio e quantidade de itens;
 - Cria análises por loja, produto e mês;
 - Salva cinco tabelas em CSV;
@@ -26,7 +26,7 @@ das etapas e explicar o que cada parte faz. Os dados são fictícios.
 - Matplotlib;
 - `datetime`, que já faz parte do Python.
 
-## Resultado com os dados de exemplo
+## Resultado validado com os dados de exemplo
 
 | Indicador | Resultado |
 |---|---:|
@@ -41,7 +41,7 @@ das etapas e explicar o que cada parte faz. Os dados são fictícios.
 
 ## Como executar
 
-É necessário ter o Python 3.10 ou mais recente instalado.
+O projeto foi testado com Python 3.12.
 
 No Windows, abra o PowerShell dentro da pasta do projeto e execute:
 
@@ -60,12 +60,12 @@ Os resultados serão criados na pasta `resultado`.
 
 | Arquivo | Conteúdo |
 |---|---|
-| `vendas_tratadas.csv` | Vendas que passaram pela validação |
-| `inconsistencias.csv` | Linhas que precisam ser corrigidas |
-| `analise_lojas.csv` | Quantidade e faturamento por loja |
-| `analise_produtos.csv` | Quantidade e faturamento por produto |
-| `analise_mensal.csv` | Quantidade e faturamento por mês |
-| `resumo_vendas.png` | Gráficos de faturamento |
+| `resultado/vendas_tratadas.csv` | Vendas que passaram pela validação |
+| `resultado/inconsistencias.csv` | Linhas que precisam ser corrigidas |
+| `resultado/analise_lojas.csv` | Quantidade e faturamento por loja |
+| `resultado/analise_produtos.csv` | Quantidade e faturamento por produto |
+| `resultado/analise_mensal.csv` | Quantidade e faturamento por mês |
+| `resultado/resumo_vendas.png` | Gráficos de faturamento |
 
 ## Estrutura
 
@@ -77,6 +77,8 @@ Os resultados serão criados na pasta `resultado`.
 │   ├── como_funciona.md      # explicação da lógica
 │   └── resumo_vendas.png     # exemplo do gráfico gerado
 ├── resultado/                # arquivos criados pelo programa
+├── .gitattributes
+├── .gitignore
 ├── executar_projeto.cmd
 ├── main.py                   # código do projeto
 └── requirements.txt
@@ -96,8 +98,8 @@ Os arquivos de entrada usam `;` como separador e precisam ter estas colunas:
 | Quantidade | 7 |
 | Preço Unitário | 89,90 |
 
-Os arquivos de exemplo possuem cinco linhas incorretas e uma venda repetida de
-propósito. Dessa forma, é possível conferir se a limpeza está funcionando.
+O conjunto de exemplo contém cinco linhas com campos inválidos e um registro
+repetido. Esses casos permitem conferir o resultado da validação.
 
 ## O que pratiquei
 
@@ -118,7 +120,9 @@ A ordem completa das etapas está em
 - Os arquivos precisam ser CSV e usar `;` como separador;
 - Os nomes das colunas precisam seguir o modelo deste projeto;
 - O programa deve ser executado a partir da pasta do projeto.
+- Quando uma linha tem mais de um problema, é mostrado o primeiro encontrado
+  na ordem das validações.
 
 Uma próxima versão pode procurar novos arquivos automaticamente e separar o
-código em funções. Preferi deixar essas melhorias para depois de dominar esses
-conceitos.
+código em funções. Nesta versão, mantive o foco nos conceitos que estou
+praticando.

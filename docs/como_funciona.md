@@ -1,7 +1,7 @@
 # Como o código funciona
 
-O `main.py` é executado de cima para baixo. Não existem classes nem funções
-criadas por mim nessa versão. A lógica está dividida em etapas.
+O `main.py` é executado de cima para baixo e mantém todas as etapas em
+sequência.
 
 ## 1. Leitura
 
@@ -16,10 +16,14 @@ pd.read_csv(arquivo, sep=";", decimal=",", thousands=".")
 - `decimal=","` reconhece a vírgula dos centavos;
 - `thousands="."` reconhece o ponto usado nos milhares.
 
-Cada tabela entra na lista `tabelas`. Depois, o `pd.concat()` junta os três
-meses em um único DataFrame chamado `vendas`.
+Cada tabela recebe uma coluna com o nome do arquivo de origem e entra na lista
+`tabelas`. Depois, o `pd.concat()` junta os três meses em um único DataFrame
+chamado `vendas`.
 
 ## 2. Tratamento das datas
+
+Antes da conversão, a coluna `Data informada` guarda o texto original. Isso
+permite consultar uma data inválida no arquivo de inconsistências.
 
 O Pandas converte a coluna de datas:
 
@@ -42,9 +46,13 @@ escrevem o motivo correspondente:
 
 - Data inválida;
 - Pedido, loja, produto ou categoria ausente;
-- Quantidade menor ou igual a zero;
-- Preço ausente ou menor que zero;
+- Quantidade ausente ou menor ou igual a zero;
+- Preço ausente ou menor ou igual a zero;
 - Registro duplicado.
+
+Cada filtro também confere se a coluna `Motivo` ainda está vazia. Por isso,
+quando uma linha tem mais de um problema, fica registrado o primeiro encontrado
+na ordem acima.
 
 O NumPy cria a coluna `Status`:
 
@@ -88,6 +96,10 @@ Depois são calculados:
 - Quantidade de pedidos diferentes;
 - Ticket médio, dividindo o faturamento pela quantidade de pedidos.
 
+Os valores de faturamento e ticket médio também são formatados com ponto nos
+milhares e vírgula nos centavos para aparecerem no padrão brasileiro no
+terminal.
+
 ## 6. Agrupamentos
 
 O `groupby()` reúne as linhas que possuem a mesma loja, produto ou mês. O
@@ -99,7 +111,8 @@ coluna comum.
 
 ## 7. Arquivos e gráficos
 
-O `.to_csv()` salva as tabelas na pasta `resultado`. Usei `;` como separador
+Antes de salvar os arquivos, as datas válidas voltam ao formato `dia/mês/ano`.
+O `.to_csv()` salva cinco tabelas na pasta `resultado`. Usei `;` como separador
 e `,` nos valores decimais para manter o padrão brasileiro.
 
 O Matplotlib cria:
@@ -108,4 +121,5 @@ O Matplotlib cria:
 - Um gráfico de linha com o faturamento por mês.
 
 O `datetime.now()` coloca no título a data e a hora da execução. No final, o
-gráfico é salvo como `resultado/resumo_vendas.png`.
+gráfico é salvo como `resultado/resumo_vendas.png`, e os principais indicadores
+aparecem no terminal.
