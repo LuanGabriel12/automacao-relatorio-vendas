@@ -1,0 +1,6 @@
+Data;Pedido;Loja;Produto;Categoria;Quantidade;Preço Unitário
+15/04/2026;S-4001;Centro;Notebook Pro 14;Informática;1;3.000,00
+15/04/2026;S-4001;Centro;Mouse Sem Fio;Acessórios;2;100,00
+15/04/2026;S-4001;Centro;Headset USB;Acessórios;1;200,00
+16/04/2026;S-4002;Online;SSD 1TB;Componentes;1;450,00
+16/04/2026;S-4002;Online;SSD 1TB;Componentes;2;400,00

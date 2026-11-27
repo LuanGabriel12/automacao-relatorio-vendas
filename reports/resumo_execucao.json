@@ -1,0 +1,181 @@
+{
+  "timestamp_execucao": "26/11/2026 01:51:58",
+  "duracao_segundos": 0.0536,
+  "status_execucao": "SUCESSO",
+  "flags": {
+    "todos_arquivos_aceitos": true,
+    "reconciliacao_aprovada": true,
+    "possui_vendas_validas": true,
+    "possui_alertas_investigacao": false
+  },
+  "ingestao": {
+    "pasta_entrada": "dados/entrada",
+    "total_arquivos_encontrados": 3,
+    "arquivos_aceitos": [
+      {
+        "arquivo": "vendas_fevereiro.csv",
+        "registros_lidos": 14,
+        "colunas_extras_ignoradas": []
+      },
+      {
+        "arquivo": "vendas_janeiro.csv",
+        "registros_lidos": 14,
+        "colunas_extras_ignoradas": []
+      },
+      {
+        "arquivo": "vendas_marco.csv",
+        "registros_lidos": 14,
+        "colunas_extras_ignoradas": []
+      }
+    ],
+    "arquivos_rejeitados": [],
+    "total_registros_recebidos": 42
+  },
+  "qualidade": {
+    "registros_validos": 36,
+    "registros_rejeitados": 6,
+    "linhas_multiplos_erros": 0,
+    "taxa_rejeicao_pct": "14.29",
+    "contagem_motivos": {
+      "Quantidade inválida (menor ou igual a zero)": 1,
+      "Preço ausente": 1,
+      "Registro duplicado": 1,
+      "Loja ausente": 1,
+      "Data inválida": 1,
+      "Pedido ausente": 1
+    },
+    "pedidos_conflito_data": [],
+    "pedidos_conflito_loja": [],
+    "total_alertas_investigacao": 0,
+    "alertas_investigacao": []
+  },
+  "kpis": {
+    "faturamento_total": "65068.00",
+    "quantidade_pedidos": 36,
+    "unidades_vendidas": 120,
+    "ticket_medio_pedido": "1807.44",
+    "receita_por_unidade": "542.23"
+  },
+  "reconciliacao": {
+    "aprovada": true,
+    "total_verificacoes": 11,
+    "total_aprovadas": 11,
+    "total_reprovadas": 0,
+    "linhas_com_ruido_float": 5,
+    "diferenca_float_vs_decimal": "0.00000000001",
+    "verificacoes": [
+      {
+        "codigo": "REC-01",
+        "nome": "Registros consolidados vs. soma dos arquivos aceitos",
+        "formula": "len(dados_brutos) == sum(registros_lidos nos arquivos aceitos)",
+        "valor_esperado": "42",
+        "valor_obtido": "42",
+        "diferenca": "0",
+        "aprovada": true
+      },
+      {
+        "codigo": "REC-02",
+        "nome": "Equação fundamental de registros (Recebidos = Válidos + Rejeitados)",
+        "formula": "total_registros_recebidos == len(vendas_validas) + len(inconsistencias)",
+        "valor_esperado": "42",
+        "valor_obtido": "42",
+        "diferenca": "0",
+        "aprovada": true
+      },
+      {
+        "codigo": "REC-03",
+        "nome": "Faturamento consolidado (recálculo independente linha a linha)",
+        "formula": "sum(Decimal(Quantidade) * Preço Unitário) == kpis['faturamento_total']",
+        "valor_esperado": "65068",
+        "valor_obtido": "65068",
+        "diferenca": "0.00",
+        "aprovada": true
+      },
+      {
+        "codigo": "REC-04",
+        "nome": "Faturamento agrupado por loja vs. consolidado",
+        "formula": "sum(analise_lojas['Faturamento']) == faturamento_total",
+        "valor_esperado": "65068",
+        "valor_obtido": "65068",
+        "diferenca": "0.00",
+        "aprovada": true
+      },
+      {
+        "codigo": "REC-05",
+        "nome": "Faturamento agrupado por produto vs. consolidado",
+        "formula": "sum(analise_produtos['Faturamento']) == faturamento_total",
+        "valor_esperado": "65068",
+        "valor_obtido": "65068",
+        "diferenca": "0.00",
+        "aprovada": true
+      },
+      {
+        "codigo": "REC-06",
+        "nome": "Faturamento agrupado por categoria vs. consolidado",
+        "formula": "sum(analise_categorias['Faturamento']) == faturamento_total",
+        "valor_esperado": "65068",
+        "valor_obtido": "65068",
+        "diferenca": "0.00",
+        "aprovada": true
+      },
+      {
+        "codigo": "REC-07",
+        "nome": "Faturamento agrupado por mês vs. consolidado",
+        "formula": "sum(analise_mensal['Faturamento']) == faturamento_total",
+        "valor_esperado": "65068",
+        "valor_obtido": "65068",
+        "diferenca": "0.00",
+        "aprovada": true
+      },
+      {
+        "codigo": "REC-08",
+        "nome": "Unidades vendidas (base vs. loja, produto, categoria e mês)",
+        "formula": "unidades_totais == sum(lojas) == sum(produtos) == sum(categorias) == sum(mensal)",
+        "valor_esperado": "120",
+        "valor_obtido": "120",
+        "diferenca": "0",
+        "aprovada": true
+      },
+      {
+        "codigo": "REC-09",
+        "nome": "Pedidos distintos (base vs. soma por loja e por mês)",
+        "formula": "nunique(Pedido) == sum(lojas['Pedidos']) == sum(mensal['Pedidos'])",
+        "valor_esperado": "36",
+        "valor_obtido": "36",
+        "diferenca": "0",
+        "aprovada": true
+      },
+      {
+        "codigo": "REC-10",
+        "nome": "Soma das participações percentuais (lojas, produtos, categorias e meses)",
+        "formula": "sum(Participação (%)) == 100% em todas as dimensões",
+        "valor_esperado": "100",
+        "valor_obtido": "100",
+        "diferenca": "0.00",
+        "aprovada": true
+      },
+      {
+        "codigo": "REC-11",
+        "nome": "Consistência de Ticket Médio e Receita por Unidade (razão entre totais)",
+        "formula": "ticket_medio == faturamento / pedidos e receita_unid == faturamento / unidades",
+        "valor_esperado": "1807.444444444444444444444444",
+        "valor_obtido": "1807.444444444444444444444444",
+        "diferenca": "0.00",
+        "aprovada": true
+      }
+    ]
+  },
+  "arquivos_gerados": [
+    "vendas_tratadas.csv",
+    "inconsistencias.csv",
+    "kpis_executivos.csv",
+    "analise_lojas.csv",
+    "analise_produtos.csv",
+    "analise_categorias.csv",
+    "analise_mensal.csv",
+    "relatorio_qualidade.md",
+    "relatorio_reconciliacao.md",
+    "relatorio_executivo.md",
+    "resumo_execucao.json"
+  ]
+}

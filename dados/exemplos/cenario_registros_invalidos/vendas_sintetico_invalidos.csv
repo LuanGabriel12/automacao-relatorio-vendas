@@ -1,0 +1,7 @@
+Data;Pedido;Loja;Produto;Categoria;Quantidade;Preço Unitário
+05/04/2026;S-2001;Centro;Mouse Sem Fio;Acessórios;2;90,00
+31/02/2026;S-2002;Centro;Monitor 24;Informática;-1;12.34
+07/04/2026;S-2003;Online;Teclado Mecânico;Acessórios;1,5;250,00
+08/04/2026;S-2004;Sul;SSD 1TB;Componentes;1;inf
+09/04/2026;;Norte;;Acessórios;0;abc
+10/04/2026;S-2006;Centro;Headset USB;Acessórios;2;NaN
